@@ -1,0 +1,21 @@
+{
+ "baseline_prior_returns": {
+  "auc": 0.6395,
+  "pr_auc": 0.2551
+ },
+ "lgbm": {
+  "auc": 0.7588,
+  "pr_auc": 0.353
+ },
+ "logreg": {
+  "auc": 0.7794,
+  "pr_auc": 0.3834
+ },
+ "blend": {
+  "auc": 0.7724,
+  "pr_auc": 0.3758
+ },
+ "LEAKY_with_service_cols": {
+  "auc": 0.9968
+ }
+}

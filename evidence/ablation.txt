@@ -1,0 +1,45 @@
+all 0.7739
+- sales_channel 0.7702
+- payment_mode 0.7433
+- family 0.7746
+- tier 0.7742
+- state 0.7731
+- note_cat 0.7784
+- tier 0.7742
+- state 0.7731
+- note_cat 0.7784
+- discount_pct 0.7739
+- promised_delivery_days 0.757
+- is_gift 0.7734
+- customer_prior_orders 0.7751
+- customer_prior_returns 0.7622
+- prior_return_rate 0.7737
+- shield 0.7526
+- qty 0.7742
+- value_to_list 0.7739
+- pincode_missing 0.7742
+- warranty_months 0.774
+- list_price_inr 0.774
+- product_age_days 0.7739
+- tenure_days 0.7746
+- hour 0.7738
+- weekday 0.7743
+- month 0.7741
+- qty 0.7742
+- value_to_list 0.7739
+- pincode_missing 0.7742
+- warranty_months 0.774
+- list_price_inr 0.774
+- product_age_days 0.7739
+- tenure_days 0.7746
+- hour 0.7738
+- weekday 0.7743
+- month 0.7741
+C 0.05 0.7752
+C 0.2 0.7743
+C 1 0.7738
+C 5 0.7736
+lean 0.1 0.7793
+lean 0.5 0.779
+lean+state 0.7801
+lean+value 0.7793

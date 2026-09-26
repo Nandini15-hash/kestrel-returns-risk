@@ -1,0 +1,49 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kestrel Returns Check</title>
+<style>
+:root{--bg:#f7f7f5;--card:#fff;--ink:#1d1d1b;--mute:#6b6b66;--line:#e2e2dc;--accent:#1f5f8b;--warn:#b5471f;--ok:#2f7a4b}
+*{box-sizing:border-box}body{margin:0;font:15px/1.45 system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+main{max-width:900px;margin:0 auto;padding:24px 16px}h1{font-size:22px;margin:0 0 4px}p.sub{color:var(--mute);margin:0 0 20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+label{display:flex;flex-direction:column;font-size:13px;color:var(--mute);gap:4px}
+input,select{font:inherit;padding:8px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:16px}
+button{font:inherit;background:var(--accent);color:#fff;border:0;border-radius:6px;padding:10px 18px;cursor:pointer;margin-top:12px}
+.big{font-size:40px;font-weight:700;font-variant-numeric:tabular-nums}.act{font-size:18px;font-weight:600}
+.call{color:var(--warn)}.ok{color:var(--ok)}ul{padding-left:18px}.up{color:var(--warn)}.down{color:var(--ok)}.err{color:var(--warn)}
+small{color:var(--mute)}
+</style></head><body><main>
+<h1>Returns check before dispatch</h1><p class="sub">Enter an order. You get the chance it comes back, what to do, and why.</p>
+<form id="f" class="card"><div class="grid">
+<label>Order ID<input name="order_id" value="KO-DEMO-1"></label>
+<label>Placed at<input name="order_placed_at" value="2026-09-10 14:20"></label>
+<label>Customer ID<input name="customer_id" value="KC100001"></label>
+<label>SKU<select name="sku" id="sku"></select></label>
+<label>Channel<select name="sales_channel"><option>app</option><option>web</option><option selected>marketplace</option><option>partner_outlet</option></select></label>
+<label>Payment<select name="payment_mode"><option value="cod" selected>Cash on delivery</option><option value="prepaid_upi">UPI</option><option value="prepaid_card">Card</option><option value="emi">EMI</option></select></label>
+<label>Discount %<input name="discount_pct" type="number" value="22"></label>
+<label>Promised delivery (days)<input name="promised_delivery_days" type="number" value="8"></label>
+<label>Customer's earlier orders<input name="customer_prior_orders" type="number" value="3"></label>
+<label>Customer's earlier returns<input name="customer_prior_returns" type="number" value="1"></label>
+<label>Gift?<select name="is_gift"><option>N</option><option>Y</option></select></label>
+<label>Shield member?<select name="shield_member"><option value="">Look up</option><option>Y</option><option>N</option></select></label>
+</div><button>Check this order</button></form>
+<div id="out"></div>
+<small>Scores come from a model trained on Apr 2025 – Jun 2026 orders. It is right about the ranking of orders, not about any single order.</small>
+</main><script>
+const skus=["KH-AF-01","KH-AF-02","KH-AF-03","KH-MG-01","KH-MG-02","KH-MG-03","KH-WP-01","KH-WP-02","KH-WP-03","KH-RV-01","KH-RV-02","KH-RV-03","KH-IC-01","KH-IC-02","KH-IC-03","KH-CF-01","KH-CF-02","KH-CF-03","KH-RH-01","KH-RH-02","KH-RH-03"];
+const s=document.getElementById('sku');skus.forEach(k=>s.add(new Option(k,k,false,k==="KH-RV-03")));
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+document.getElementById('f').onsubmit=async e=>{e.preventDefault();const o=document.getElementById('out');
+ const body=Object.fromEntries(new FormData(e.target));if(!body.shield_member)delete body.shield_member;
+ ['discount_pct','promised_delivery_days','customer_prior_orders','customer_prior_returns'].forEach(k=>body[k]=Number(body[k]));
+ o.innerHTML='<div class="card">Checking…</div>';
+ try{const r=await fetch('/score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  const j=await r.json();if(!r.ok)throw new Error(typeof j.detail==='string'?j.detail:'Some fields look wrong - check the form.');
+  const call=j.action.startsWith('CALL');
+  o.innerHTML=`<div class="card"><div class="big">${Math.round(j.return_probability*100)}%</div><small>chance this order is returned · ${esc(j.vs_average)}</small>
+  <p class="act ${call?'call':'ok'}">${esc(j.action)}</p><p>${esc(j.why_this_action)}</p>
+  <b>Why</b><ul>${j.reasons.map(x=>`<li class="${x.direction==='raises risk'?'up':'down'}">${esc(x.reason)} — ${esc(x.direction)}</li>`).join('')}</ul>
+  ${j.notes.map(n=>`<small>${esc(n)}</small><br>`).join('')}</div>`;
+ }catch(err){o.innerHTML=`<div class="card err">Could not score this order: ${esc(err.message)}. Is the service running?</div>`}};
+</script></body></html>

@@ -1,0 +1,8 @@
+# Client data - never commit (ops-policy §10). Copy the pack's files into data/ locally.
+data/*.csv
+data/*.pdf
+data/*.txt
+__pycache__/
+.pytest_cache/
+*.pyc
+.venv/
