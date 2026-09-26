@@ -1,6 +1,6 @@
 # Submission form — Kestrel Home, Returns Risk (Variant A)
 
-**GitHub repo URL:** `https://github.com/<your-user>/kestrel-returns-risk` (private; access shared with the invitation address)
+**GitHub repo URL:** https://github.com/Nandini15-hash/kestrel-returns-risk (private; access shared with the invitation address)
 
 ---
 
