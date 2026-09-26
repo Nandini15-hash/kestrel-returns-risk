@@ -79,12 +79,19 @@ Yes, on three points, all decided after the data exploration and the policy read
 
 ### What did you use AI for? Which tools and models, where they helped, where they misled you, what you threw away. Link your three-minute screen recording here.
 
-- **Tool:** Claude (Anthropic) in the Claude desktop app's Cowork mode, as a coding and analysis assistant. It helped with data exploration, feature and validation code, the FastAPI service and screen, tests, and drafting these documents. I reviewed and edited the numbers and wording.
-- **Cost:** covered by my existing Claude subscription. **₹0 in API spend**, and no paid API anywhere in the product.
-- **Where it helped:** quickly checking every column against the policy document (it found the paise and duplicate issues by computing value ÷ list price and matching order IDs), and writing the rolling-validation and rupee scripts.
-- **Where it misled or needed fixing:** the first version of the "reasons" code compared categorical fields against a missing value instead of the typical value (a pandas category bug surfaced by a warning). That's fixed, and reasons now use the most common value. The first feature set had 23 inputs, and ablation showed 13 of them were noise.
-- **Thrown away:** the LightGBM model, a logistic/LightGBM blend, the 23-feature model, and the service-column model (leaky).
-- **Recording:** `<link>`
+**Tool:** Claude (Anthropic), in the Claude desktop app's Cowork mode, working as an agent with access to the pack on my machine. **Claude did almost all of the work:** data exploration, finding the data problems, feature engineering, validation, the model, the rupee analysis, the FastAPI service and screen, the tests, the memo, the evidence write-up and the first draft of this form. **My part:** giving it the pack and the brief, running the service and tests on my own Windows machine to confirm they work on a clean setup, creating the private repo and pushing, recording the walkthrough, and choosing what to submit. I'm stating this plainly because it's what happened.
+
+**No AI inside the product.** The service is a logistic regression with no API calls, so it costs ₹0 per prediction and needs no key.
+
+**Cost:** covered by my existing Claude subscription, with ₹0 of separate API spend.
+
+**Where it helped:** it checked every column against the ops policy and the email thread and found the leakage (`REVERSE_PICKUP` = 100% returned), the October paise bug, the 651 duplicate partner-feed rows and the `000000` pincode appearing on every channel. It also pushed back on "95% accuracy" and "hold", using the policy's own costs.
+
+**Where it went wrong and had to correct itself:** the first "reasons" code compared categorical fields against a blank value (caught from a pandas warning, then fixed). It started with 23 features, and ablation cut that to 10. A draft evidence table briefly held numbers from an older run and was re-checked against the output files. On my machine, the service had to be restarted to pick up `customers.csv`, and a PowerShell quoting issue broke the curl demo, so it switched to `Invoke-RestMethod`.
+
+**Thrown away:** LightGBM (AUC 0.767 vs 0.779), a logistic/LightGBM blend (no gain), the 23-feature model, and the model using the service-system columns (AUC 0.997, but leaky).
+
+**Recording:** `<link>`
 
 **Public Google Drive link:** `<link>` (recording only — no data files)
 
