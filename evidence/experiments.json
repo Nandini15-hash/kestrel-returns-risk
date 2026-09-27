@@ -4,18 +4,18 @@
   "pr_auc": 0.2551
  },
  "lgbm": {
-  "auc": 0.7588,
-  "pr_auc": 0.353
+  "auc": 0.7666,
+  "pr_auc": 0.3607
  },
  "logreg": {
-  "auc": 0.7794,
-  "pr_auc": 0.3834
+  "auc": 0.7804,
+  "pr_auc": 0.3893
  },
  "blend": {
-  "auc": 0.7724,
-  "pr_auc": 0.3758
+  "auc": 0.777,
+  "pr_auc": 0.3829
  },
  "LEAKY_with_service_cols": {
-  "auc": 0.9968
+  "auc": 0.9969
  }
 }
