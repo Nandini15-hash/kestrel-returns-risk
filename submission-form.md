@@ -91,9 +91,9 @@ Yes, on three points, all decided after the data exploration and the policy read
 
 **Thrown away:** LightGBM (AUC 0.767 vs 0.779), a logistic/LightGBM blend (no gain), the 23-feature model, and the model using the service-system columns (AUC 0.997, but leaky).
 
-**Recording:** `<link>`
+**Recording:** https://drive.google.com/file/d/1feaFiF9BGlFAINDHE3qnCh8N59X4cPDw/view?usp=sharing
 
-**Public Google Drive link:** `<link>` (recording only — no data files)
+**Public Google Drive link:** https://drive.google.com/file/d/1feaFiF9BGlFAINDHE3qnCh8N59X4cPDw/view?usp=sharing (recording only — no data files)
 
 ### Someone picks this up on Monday and you are unreachable. The three things they need to know.
 
